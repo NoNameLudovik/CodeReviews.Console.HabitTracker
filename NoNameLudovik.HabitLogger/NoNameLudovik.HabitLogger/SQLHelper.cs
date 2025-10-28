@@ -1,6 +1,7 @@
-﻿using Microsoft.Data.Sqlite;
+﻿/*SQLHelper class - contains methods for working with database*/
+
+using Microsoft.Data.Sqlite;
 using System.Globalization;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NoNameLudovik.HabitLogger
 {
@@ -85,6 +86,24 @@ namespace NoNameLudovik.HabitLogger
                 var tableCmd = connection.CreateCommand();
                 tableCmd.CommandText = $"DELETE FROM drinking_water WHERE id = {id}";
                 tableCmd.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+
+        internal static void IdCheck(int id)
+        {
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var tableCmd = connection.CreateCommand();
+                tableCmd.CommandText = $"SELECT * FROM drinking_water WHERE id = {id}";
+
+                SqliteDataReader reader = tableCmd.ExecuteReader();
+
+                if (!reader.HasRows)
+                {
+                    throw new Exception($@"Record with ID:{id} doesn't exist");
+                }
                 connection.Close();
             }
         }

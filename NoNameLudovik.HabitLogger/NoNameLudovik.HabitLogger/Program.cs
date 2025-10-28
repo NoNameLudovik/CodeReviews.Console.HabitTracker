@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.Sqlite;
-
-namespace NoNameLudovik.HabitLogger
+﻿namespace NoNameLudovik.HabitLogger
 {
     internal class Program
     {
@@ -10,7 +8,7 @@ namespace NoNameLudovik.HabitLogger
             {
                 Menu.ShowMenu();
 
-                string userInput = Console.ReadLine();
+                string? userInput = Console.ReadLine();
 
                 switch(userInput)
                 {
@@ -32,9 +30,13 @@ namespace NoNameLudovik.HabitLogger
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine("Wrong input! Try again!");
+                        Console.Clear();
+                        Console.Write("Wrong input! Try again!");
+                        Console.ReadKey();
                         break;
                 }
+
+                Console.Clear();
             }
         }
     }

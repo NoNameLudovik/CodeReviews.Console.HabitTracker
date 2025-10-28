@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿/*Menu class - contains methods for menu working*/
 
 namespace NoNameLudovik.HabitLogger
 {
@@ -35,7 +30,7 @@ namespace NoNameLudovik.HabitLogger
 
             Console.Clear();
             Console.Write(@"Type quantity: ");
-            Int32.TryParse(Console.ReadLine(), out quantity);
+            quantity = Helper.GetNumber();
 
             SQLHelper.InsertRow(date, quantity);
 
@@ -50,49 +45,80 @@ namespace NoNameLudovik.HabitLogger
 
             foreach (var record in records)
             {
-                Console.WriteLine($"{record.id}----{record.date.ToString("dd-MM-yyyy")}----{record.quantity}");
+                Console.WriteLine($"ID:{record.id}  Date:{record.date.ToString("dd-MM-yyyy")}  Quantity:{record.quantity}");
             }
         }
 
         internal static void DeleteRecord()
         {
-            Console.Clear();
-            ShowRecords();
-            Console.Write("Enter record's ID to delete it: ");
-            int id; 
-            Int32.TryParse(Console.ReadLine(), out id);
-            SQLHelper.DeleteRow(id);
-
-            Console.Clear();
-            ShowRecords();
-            Console.WriteLine("Record deleted!");
-            Console.ReadKey();
+            while (true)
+            {
+                Console.Clear();
+                ShowRecords();
+                Console.Write("Enter record's ID to delete it: ");
+                int id;
+                id = Helper.GetNumber();
+                try
+                {
+                    SQLHelper.IdCheck(id);
+                }
+                catch (Exception ex)
+                {
+                    Console.Clear();
+                    Console.WriteLine(ex.Message);
+                    Console.ReadKey();
+                    continue;
+                }
+                SQLHelper.DeleteRow(id);
+                Console.Clear();
+                ShowRecords();
+                Console.WriteLine("Record deleted!");
+                Console.ReadKey();
+                break;
+            }
         }
 
         internal static void EditRecord()
         {
-            Console.Clear();
+            
 
             int id;
             DateTime date;
             int quantity;
 
-            ShowRecords();
-            Console.Write("Enter record's ID to edit it: ");
-            Int32.TryParse(Console.ReadLine(), out id);
+            while (true)
+            {
+                Console.Clear();
+                ShowRecords();
+                Console.Write("Enter record's ID to edit it: ");
+                id = Helper.GetNumber();
 
-            Console.Write(@"Type a date in 'dd-MM-yyyy' format: ");
-            date = Helper.GetDate();
+                try
+                {
+                    SQLHelper.IdCheck(id);
+                }
+                catch (Exception ex)
+                {
+                    Console.Clear();
+                    Console.WriteLine(ex.Message);
+                    Console.ReadKey();
+                    continue;
+                }
 
-            Console.Write(@"Type quantity: ");
-            Int32.TryParse(Console.ReadLine(), out quantity);
+                Console.Write(@"Type a date in 'dd-MM-yyyy' format: ");
+                date = Helper.GetDate();
 
-            SQLHelper.UpdateRow(id, date, quantity);
+                Console.Write(@"Type quantity: ");
+                quantity = Helper.GetNumber();
 
-            Console.Clear();
-            ShowRecords();
-            Console.WriteLine($"Record with ID {id} was changed!");
-            Console.ReadKey();
+                SQLHelper.UpdateRow(id, date, quantity);
+
+                Console.Clear();
+                ShowRecords();
+                Console.WriteLine($"Record with ID {id} was changed!");
+                Console.ReadKey();
+                break;
+            }
         }
     }
 }
