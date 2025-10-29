@@ -9,11 +9,15 @@ namespace NoNameLudovik.HabitLogger
         internal static DateTime GetDate()
         {
             string? input;
-            DateTime date;
+            DateTime date = new();
 
-            while(true)
+            Console.Write(@"Type in a date in 'dd-MM-yyyy' format or 'b' to back to menu: ");
+
+            while (true)
             {
                 input = Console.ReadLine();
+
+                if (input == "b") return date;
 
                 if (DateTime.TryParseExact(input, "dd-MM-yyyy", new CultureInfo("en-US"), DateTimeStyles.None, out date))
                 {

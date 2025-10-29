@@ -25,8 +25,9 @@ namespace NoNameLudovik.HabitLogger
             int quantity;
 
             Console.Clear();
-            Console.Write(@"Type a date in 'dd-MM-yyyy' format: ");
             date = Helper.GetDate();
+
+            if(date.Year == 1) return;
 
             Console.Clear();
             Console.Write(@"Type quantity: ");
@@ -53,14 +54,25 @@ namespace NoNameLudovik.HabitLogger
         {
             while (true)
             {
-                Console.Clear();
-                ShowRecords();
-                Console.Write("Enter record's ID to delete it: ");
-                int id;
-                id = Helper.GetNumber();
+                
                 try
                 {
+                    Console.Clear();
+                    ShowRecords();
+                    Console.Write(@"Type in record's ID to delete it or 'b' to back to menu: ");
+                    int id;
+                    id = Helper.GetNumber();
+
+                    if (id == 0) break;
+
                     SQLHelper.IdCheck(id);
+
+                    SQLHelper.DeleteRow(id);
+                    Console.Clear();
+                    ShowRecords();
+                    Console.WriteLine("Record deleted!");
+                    Console.ReadKey();
+                    break;
                 }
                 catch (Exception ex)
                 {
@@ -69,33 +81,39 @@ namespace NoNameLudovik.HabitLogger
                     Console.ReadKey();
                     continue;
                 }
-                SQLHelper.DeleteRow(id);
-                Console.Clear();
-                ShowRecords();
-                Console.WriteLine("Record deleted!");
-                Console.ReadKey();
-                break;
             }
         }
 
         internal static void EditRecord()
         {
-            
-
             int id;
             DateTime date;
             int quantity;
 
             while (true)
             {
-                Console.Clear();
-                ShowRecords();
-                Console.Write("Enter record's ID to edit it: ");
-                id = Helper.GetNumber();
-
                 try
                 {
+                    Console.Clear();
+                    ShowRecords();
+                    Console.Write(@"Type in record's ID to edit it or 'b' to back to menu: ");
+                    id = Helper.GetNumber();
+
+                    if (id == 0) break;
+
                     SQLHelper.IdCheck(id);
+                    date = Helper.GetDate();
+
+                    Console.Write(@"Type quantity: ");
+                    quantity = Helper.GetNumber();
+
+                    SQLHelper.UpdateRow(id, date, quantity);
+
+                    Console.Clear();
+                    ShowRecords();
+                    Console.WriteLine($"Record with ID {id} was changed!");
+                    Console.ReadKey();
+                    break;
                 }
                 catch (Exception ex)
                 {
@@ -104,20 +122,6 @@ namespace NoNameLudovik.HabitLogger
                     Console.ReadKey();
                     continue;
                 }
-
-                Console.Write(@"Type a date in 'dd-MM-yyyy' format: ");
-                date = Helper.GetDate();
-
-                Console.Write(@"Type quantity: ");
-                quantity = Helper.GetNumber();
-
-                SQLHelper.UpdateRow(id, date, quantity);
-
-                Console.Clear();
-                ShowRecords();
-                Console.WriteLine($"Record with ID {id} was changed!");
-                Console.ReadKey();
-                break;
             }
         }
     }

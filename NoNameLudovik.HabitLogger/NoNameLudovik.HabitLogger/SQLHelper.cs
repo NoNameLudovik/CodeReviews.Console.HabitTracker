@@ -7,7 +7,7 @@ namespace NoNameLudovik.HabitLogger
 {
     internal class SQLHelper
     {
-        static string connectionString = @"Data Source=habit-Tracker.db";
+        static string connectionString = @"Data Source=habit-Logger.db";
 
         internal static void InitiateDataBase()
         {
@@ -59,6 +59,10 @@ namespace NoNameLudovik.HabitLogger
                             quantity = reader.GetInt32(2)
                         });
                     }
+                }
+                else
+                {
+                    Console.WriteLine("There are no records!");
                 }
                 connection.Close();
 
