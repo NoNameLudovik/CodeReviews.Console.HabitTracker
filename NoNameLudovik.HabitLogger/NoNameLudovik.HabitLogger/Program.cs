@@ -7,7 +7,7 @@
             while (true)
             {
                 Menu.ShowMenu();
-                SQLHelper.InitiateDataBase();
+                SqlHelper.InitiateDataBase();
 
                 string? userInput = Console.ReadLine();
 

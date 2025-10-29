@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace NoNameLudovik.HabitLogger
 {
-    internal class SQLHelper
+    internal class SqlHelper
     {
         static string connectionString = @"Data Source=habit-Logger.db";
 
@@ -49,9 +49,6 @@ namespace NoNameLudovik.HabitLogger
                 {
                     while (reader.Read())
                     {
-                        var id = reader.GetInt32(0);
-                        var quantity = reader.GetInt32(2);
-
                         rows.Add(new DrinkWater
                         {
                             id = reader.GetInt32(0),

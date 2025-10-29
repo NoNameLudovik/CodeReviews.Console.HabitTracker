@@ -33,7 +33,7 @@ namespace NoNameLudovik.HabitLogger
             Console.Write(@"Type quantity: ");
             quantity = Helper.GetNumber();
 
-            SQLHelper.InsertRow(date, quantity);
+            SqlHelper.InsertRow(date, quantity);
 
             Console.WriteLine("Record added!");
             Console.ReadKey();
@@ -42,7 +42,7 @@ namespace NoNameLudovik.HabitLogger
         internal static void ShowRecords()
         {
             Console.Clear();
-            var records = SQLHelper.GetTableRows();
+            var records = SqlHelper.GetTableRows();
 
             foreach (var record in records)
             {
@@ -65,9 +65,9 @@ namespace NoNameLudovik.HabitLogger
 
                     if (id == 0) break;
 
-                    SQLHelper.IdCheck(id);
+                    SqlHelper.IdCheck(id);
 
-                    SQLHelper.DeleteRow(id);
+                    SqlHelper.DeleteRow(id);
                     Console.Clear();
                     ShowRecords();
                     Console.WriteLine("Record deleted!");
@@ -101,13 +101,13 @@ namespace NoNameLudovik.HabitLogger
 
                     if (id == 0) break;
 
-                    SQLHelper.IdCheck(id);
+                    SqlHelper.IdCheck(id);
                     date = Helper.GetDate();
 
                     Console.Write(@"Type quantity: ");
                     quantity = Helper.GetNumber();
 
-                    SQLHelper.UpdateRow(id, date, quantity);
+                    SqlHelper.UpdateRow(id, date, quantity);
 
                     Console.Clear();
                     ShowRecords();
