@@ -2,7 +2,7 @@
   "profiles": {
     "NoNameLudovik.HabitLogger": {
       "commandName": "Project",
-      "workingDirectory": "D:\\LearnC#\\Repositories\\CodeReviews.Console.HabitTracker\\NoNameLudovik.HabitLogger\\NoNameLudovik.HabitLogger\\"
+      "workingDirectory": "."
     }
   }
 }
